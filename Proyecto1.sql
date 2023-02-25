@@ -1,5 +1,5 @@
+-- DATASET DESCARGADO DE: https://www.kaggle.com/datasets/heesoo37/120-years-of-olympic-history-athletes-and-results
 -- MySQL dump 10.13  Distrib 8.0.30, for Win64 (x86_64)
---
 -- Host: localhost    Database: proyectos
 -- ------------------------------------------------------
 -- Server version	8.0.30
@@ -21,6 +21,21 @@ CREATE TABLE `athlete_events` (
   `Event` varchar(100) DEFAULT NULL,
   `Medal` varchar(100) DEFAULT NULL
 );
+
+-- Recuento del total de JJOO disputados
+SELECT COUNT(DISTINCT Games) AS Total_JJOO
+FROM athlete_events;
+
+-- Listar todos los JJOO por año, temporada y ciudad hasta 2016
+SELECT DISTINCT year, season, city
+FROM athlete_events
+ORDER BY year ASC;
+
+-- Total de deportes jugados en cada JJOO
+SELECT games, COUNT(DISTINCT sport) AS total_deportes
+FROM athlete_events
+GROUP BY games
+ORDER BY total_deportes DESC, games DESC;
 
 --
 -- Table structure for table `noc_regions`
