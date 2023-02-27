@@ -37,6 +37,38 @@ FROM athlete_events
 GROUP BY games
 ORDER BY total_deportes DESC, games DESC;
 
+-- Atletas mas viejos en conseguir medalla de oro
+SELECT name, sex, age, team, games, city, sport, event, medal
+FROM athlete_events
+WHERE medal = "gold" AND age NOT LIKE "NA"
+ORDER BY age DESC, name DESC
+LIMIT 2;
+
+-- Top atletas con medalla de oro
+SELECT name, team, COUNT(medal) AS total_oro
+FROM athlete_events
+WHERE medal = "gold"
+group by name
+order by total_gold desc
+limit 5;
+
+-- Top atletas con medalla de oro, bronce o plata
+select name, team, COUNT(medal) as total_medallas
+from athlete_events
+where medal IN ("gold", "silver", "bronze")
+group by name
+order by total_medallas desc
+limit 10;
+
+-- TOP 5 países con más medallas en la historia
+select nr.region, COUNT(ae.medal) as total_medallas
+from athlete_events ae
+join noc_regions nr on ae.noc = nr.noc
+WHERE medal <> "NA" 
+group by region
+ORDER BY total_medallas DESC
+LIMIT 5;
+
 --
 -- Table structure for table `noc_regions`
 --
